@@ -10,6 +10,8 @@ var Enemy = function(x, y) {
     this.x = x;
     // initial y position
     this.y = y;
+    //
+    this.speed = 100;
 };
 
 // Update the enemy's position, required method for game
@@ -18,6 +20,7 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    this.x += this.speed * dt;
 };
 
 // Draw the enemy on the screen
@@ -56,14 +59,12 @@ Player.prototype.handleInput = function() {
 
 // Now instantiate your objects.
 // Place the player object in a variable called player
-var player = new Player(250, 300);
+var player = new Player(220, 450);
 
-var enemy1 = new Enemy(0,0);
-var enemy2 = new Enemy(50,50);
-var enemy3 = new Enemy(100,100);
+var enemy1 = new Enemy(0,50);
 
 // Place all enemy objects in an array called allEnemies
-var allEnemies = [enemy1, enemy2, enemy3];
+var allEnemies = [enemy1];
 
 
 
