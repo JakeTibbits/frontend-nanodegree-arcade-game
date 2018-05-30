@@ -21,6 +21,8 @@ class Enemy extends Character {
   constructor(sprite, x, y, speed){
     super(sprite, x, y, speed);
   }
+  // Update the enemy's position, required method for game
+  // Parameter: dt, a time delta between ticks
   update(dt) {
       // You should multiply any movement by the dt parameter
       // which will ensure the game runs at the same speed for
@@ -38,10 +40,7 @@ class Player extends Character {
     super(sprite, x, y, speed);
     // Update the player's position
   }
-  update(moveX, moveY) {
-      if(moveX){ this.x = (this.x + moveX); }
-      if(moveY){ this.y = (this.y + moveY); }
-  };
+  // parse arrow key presses into directional movement values
   handleInput(key) {
 
     let moveX = 0;
@@ -59,6 +58,11 @@ class Player extends Character {
 
     player.update(moveX, moveY);
 
+  };
+  // update the position of the player character
+  update(moveX, moveY) {
+      if(moveX){ this.x = (this.x + moveX); }
+      if(moveY){ this.y = (this.y + moveY); }
   };
 }
 
