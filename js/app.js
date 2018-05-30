@@ -1,6 +1,6 @@
 // Enemies and Characters share features - let's make a parent Class they can extend from
-class Character {
-  constructor(sprite, x, y, width, height speed) {
+class Entity {
+  constructor(sprite, x, y, width, height, speed) {
     // character image
     this.sprite = sprite;
     // horizontal position
@@ -18,12 +18,25 @@ class Character {
   render(){
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   };
+
+  checkCollision(){
+    let collision = false;
+
+    if ( ((this.x + this.width) > player.x)
+    && ((player.x + player.width) > this.x)
+    && ((player.y + player.height) > this.y)
+    && ((this.y + this.height) > player.y) ) {
+      collision = true;
+    }
+    return collision;
+  };
 }
 
 // Enemies our player must avoid
 class Enemy extends Character {
-  constructor(sprite, x, y, speed){
-    super(sprite, x, y, speed);
+  constructor(sprite, x, y, width, height, speed){
+    super(sprite, x, y, width, height, speed);
+
   }
   // Update the enemy's position, required method for game
   // Parameter: dt, a time delta between ticks
@@ -35,22 +48,24 @@ class Enemy extends Character {
       if(this.x > 505){
         this.x = -70;
       }
+      this.doCollision(this.checkCollision());
+      //console.log("Enemy Position: X"+this.x+" Y"+this.y);
   };
 
-  checkCollisions(){
-    let collision = FALSE;
-
-    if(collision){
-        player.dead();
+  doCollision(collide){
+    if(collide === true){
+      player.dead();
     }
   }
+
+
 
 }
 
 // Player Character
 class Player extends Character {
-  constructor(sprite, x, y, speed){
-    super(sprite, x, y, speed);
+  constructor(sprite, x, y, width, height, speed){
+    super(sprite, x, y, width, height, speed);
     // Update the player's position
   }
   // parse arrow key presses into directional movement values
@@ -60,41 +75,57 @@ class Player extends Character {
     let moveY = 0;
 
     if(key == 'left'){
-      moveX = -this.speed;
-    } else if(key == 'right'){
-      moveX = this.speed;
-    } else if(key == 'up'){
-      moveY = -this.speed;
-    } else if(key == 'down'){
-      moveY= this.speed;
+      if(this.x - this.speed > -15){
+        this.x -= this.speed;
+      } else { this.x = -15;}
     }
 
-    player.update(moveX, moveY);
+    else if(key == 'right'){
+      if(this.x + this.speed < 420){
+        this.x += this.speed;
+      } else { this.x = 420;}
+    }
+
+    else if(key == 'up'){
+      if(this.y - this.speed > 10){
+        this.y -= this.speed;
+      } else { player.winLevel(); }
+    }
+
+    else if(key == 'down'){
+      if(this.y + this.speed < 400){
+        this.y += this.speed;
+      } else { this.y = 400;}
+    }
 
   };
-  // update the position of the player character
-  update(moveX, moveY) {
-      if(moveX){ this.x = (this.x + moveX); }
-      if(moveY){ this.y = (this.y + moveY); }
-  };
+
+
+  update(){};
 
   //reset progress when collision occurs
   dead(){
     this.x = startingPosition['x'];
     this.y = startingPosition['y'];
-  }
+  };
+
+  //win level
+  win(){
+
+  };
 
 }
 
-const startingPosition = { x: 220, y: 450 };
+const startingPosition = { x: 205, y: 400 };
 // Now instantiate your objects.
 // Place the player object in a variable called player
-const player = new Player('images/char-boy.png', startingPosition['x'], startingPosition['y'], 70, 70, 50);
+const player = new Player('images/char-boy.png', startingPosition['x'], startingPosition['y'], 60, 70, 50);
 
-const enemy1 = new Enemy('images/enemy-bug.png', -50, 100, 70, 70, 100);
+const enemy1 = new Enemy('images/enemy-bug.png', -100, 60, 80, 60, 170);
+const enemy2 = new Enemy('images/enemy-bug.png', -100, 180, 80, 60, 170);
 
 // Place all enemy objects in an array called allEnemies
-const allEnemies = [enemy1];
+const allEnemies = [enemy1, enemy2];
 
 
 
