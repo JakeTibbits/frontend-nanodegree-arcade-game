@@ -1,12 +1,16 @@
 // Enemies and Characters share features - let's make a parent Class they can extend from
 class Character {
-  constructor(sprite, x, y, speed) {
+  constructor(sprite, x, y, width, height speed) {
     // character image
     this.sprite = sprite;
     // horizontal position
     this.x = x;
     // vertical position
     this.y = y;
+    //character sprite width
+    this.width = width;
+    //character sprite height
+    this.height = height;
     // movement speed
     this.speed = speed;
   }
@@ -32,6 +36,15 @@ class Enemy extends Character {
         this.x = -70;
       }
   };
+
+  checkCollisions(){
+    let collision = FALSE;
+
+    if(collision){
+        player.dead();
+    }
+  }
+
 }
 
 // Player Character
@@ -64,15 +77,21 @@ class Player extends Character {
       if(moveX){ this.x = (this.x + moveX); }
       if(moveY){ this.y = (this.y + moveY); }
   };
+
+  //reset progress when collision occurs
+  dead(){
+    this.x = startingPosition['x'];
+    this.y = startingPosition['y'];
+  }
+
 }
 
-
-
+const startingPosition = { x: 220, y: 450 };
 // Now instantiate your objects.
 // Place the player object in a variable called player
-const player = new Player('images/char-boy.png', 220, 450, 50);
+const player = new Player('images/char-boy.png', startingPosition['x'], startingPosition['y'], 70, 70, 50);
 
-const enemy1 = new Enemy('images/enemy-bug.png', -50, 100, 100);
+const enemy1 = new Enemy('images/enemy-bug.png', -50, 100, 70, 70, 100);
 
 // Place all enemy objects in an array called allEnemies
 const allEnemies = [enemy1];
