@@ -33,7 +33,7 @@ class Entity {
 }
 
 // Enemies our player must avoid
-class Enemy extends Character {
+class Enemy extends Entity {
   constructor(sprite, x, y, width, height, speed){
     super(sprite, x, y, width, height, speed);
 
@@ -54,7 +54,7 @@ class Enemy extends Character {
 
   doCollision(collide){
     if(collide === true){
-      player.dead();
+      player.loseLevel();
     }
   }
 
@@ -63,7 +63,7 @@ class Enemy extends Character {
 }
 
 // Player Character
-class Player extends Character {
+class Player extends Entity {
   constructor(sprite, x, y, width, height, speed){
     super(sprite, x, y, width, height, speed);
     // Update the player's position
@@ -89,7 +89,7 @@ class Player extends Character {
     else if(key == 'up'){
       if(this.y - this.speed > 10){
         this.y -= this.speed;
-      } else { player.winLevel(); }
+      } else { this.y = -10; player.gainLevel(); }
     }
 
     else if(key == 'down'){
@@ -101,17 +101,22 @@ class Player extends Character {
   };
 
 
-  update(){};
+  //update(){};
 
   //reset progress when collision occurs
-  dead(){
+  loseLevel(){
     this.x = startingPosition['x'];
     this.y = startingPosition['y'];
   };
 
   //win level
-  win(){
-
+  gainLevel(){
+    console.log('win');
+    setTimeout(function(){
+      console.log('time');
+      player.x = startingPosition['x'];
+      player.y = startingPosition['y'];
+    }, 500);
   };
 
 }
@@ -119,13 +124,14 @@ class Player extends Character {
 const startingPosition = { x: 205, y: 400 };
 // Now instantiate your objects.
 // Place the player object in a variable called player
-const player = new Player('images/char-boy.png', startingPosition['x'], startingPosition['y'], 60, 70, 50);
+const player = new Player('images/char-boy.png', startingPosition['x'], startingPosition['y'], 60, 70, 60);
 
-const enemy1 = new Enemy('images/enemy-bug.png', -100, 60, 80, 60, 170);
-const enemy2 = new Enemy('images/enemy-bug.png', -100, 180, 80, 60, 170);
+const enemy1 = new Enemy('images/enemy-bug.png', -100, 65, 80, 60, 170);
+const enemy2 = new Enemy('images/enemy-bug.png', -100, 148, 80, 60, 80);
+const enemy3 = new Enemy('images/enemy-bug.png', -100, 230, 80, 60, 250);
 
 // Place all enemy objects in an array called allEnemies
-const allEnemies = [enemy1, enemy2];
+const allEnemies = [enemy1, enemy2, enemy3];
 
 
 
@@ -135,11 +141,12 @@ const allEnemies = [enemy1, enemy2];
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
     const allowedKeys = {
-        37: 'left',
-        38: 'up',
-        39: 'right',
-        40: 'down'
+        ArrowLeft: 'left',
+        ArrowUp: 'up',
+        ArrowRight: 'right',
+        ArrowDown: 'down',
+        Escape: 'end'
     };
 
-    player.handleInput(allowedKeys[e.keyCode]);
+    player.handleInput(allowedKeys[e.key]);
 });

@@ -1,3 +1,11 @@
 body {
     text-align: center;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    background-image: url(https://upload.wikimedia.org/wikipedia/commons/6/63/Beautiful_landscape_of_the_stream_with_vegetation_around_it.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
