@@ -21,6 +21,9 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     this.x += this.speed * dt;
+    if(this.x > 505){
+      this.x = -70;
+    }
 };
 
 // Draw the enemy on the screen
@@ -38,20 +41,35 @@ var Player = function(x, y) {
     this.x = x;
     // initial y position
     this.y = y;
+    // movement speed
+    this.speed = 50;
 };
-// Update the player's position, required method for game
-// Parameter: dt, a time delta between ticks
-Player.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
+// Update the player's position
+Player.prototype.update = function(moveX, moveY) {
+    if(moveX){ this.x = (this.x + moveX); }
+    if(moveY){ this.y = (this.y + moveY); }
 };
 // Draw the player on the screen
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 // Handle player input
-Player.prototype.handleInput = function() {
+Player.prototype.handleInput = function(key) {
+
+  var moveX = 0;
+  var moveY = 0;
+
+  if(key == 'left'){
+    moveX = -this.speed;
+  } else if(key == 'right'){
+    moveX = this.speed;
+  } else if(key == 'up'){
+    moveY = -this.speed;
+  } else if(key == 'down'){
+    moveY= this.speed;
+  }
+
+  player.update(moveX, moveY);
 
 };
 
