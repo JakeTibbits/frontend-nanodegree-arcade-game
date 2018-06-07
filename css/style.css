@@ -1,11 +1,20 @@
+@import url("https://fonts.googleapis.com/css?family=Patrick+Hand+SC");
 body {
-    text-align: center;
-    height: 100vh;
-    width: 100vw;
-    margin: 0;
-    padding: 0;
-    background-image: url(https://upload.wikimedia.org/wikipedia/commons/6/63/Beautiful_landscape_of_the_stream_with_vegetation_around_it.jpg);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
+  text-align: center;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  font-family: "Patrick Hand SC", Arial, sans-serif;
+  background-image: url(../images/bg.jpg);
+  background-size: contain;
+  background-position: center; }
+
+.game-header h1 {
+  font-family: "Patrick Hand SC", Arial, sans-serif;
+  color: #fff;
+  letter-spacing: 0.1em;
+  margin-bottom: 0;
+  font-size: 36px; }
