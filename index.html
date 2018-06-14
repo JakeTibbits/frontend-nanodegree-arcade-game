@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Bug Run Funtime Crossy Game</title>
-    <link rel="stylesheet" href="css/style.min.css">
+  <meta charset="UTF-8">
+  <title>Bug Run Funtime Crossy Game</title>
+  <link rel="stylesheet" href="css/style.min.css">
 </head>
 <body>
   <header class="game-header">
@@ -13,10 +13,42 @@
     <ul id="livesList">
 
     </ul>
-    <span class="level">Lvl: <strong id="levelMarker"></strong></span>
+    <span class="level">Lvl: <strong id="levelMarker"></strong> / <strong>5</strong></span>
   </section>
-    <script src="js/resources.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/engine.js"></script>
+  <div class="modal" id="userPause">
+    <div class="modal-content" id="pauseText">
+      <span>Paused</span>
+      <p>
+        Press 'Spacebar' to Resume
+      </p>
+    </div>
+  </div>
+  <div class="modal" id="winLevel">
+    <div class="modal-content" id="winLevelText">
+      <span>Good Job!</span>
+      <p>
+        Press 'Spacebar' for Next Level.
+      </p>
+    </div>
+  </div>
+  <div class="modal" id="winGame">
+    <div class="modal-content" id="winGameText">
+      <span>You Win!</span>
+      <p>
+        Press 'Spacebar' to Start Again.
+      </p>
+    </div>
+  </div>
+  <div class="modal" id="loseGame">
+    <div class="modal-content" id="loseGameText">
+      <span>You Lose!</span>
+      <p>
+        Press 'Spacebar' to Start Again.
+      </p>
+    </div>
+  </div>
+  <script src="js/resources.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/engine.js"></script>
 </body>
 </html>
