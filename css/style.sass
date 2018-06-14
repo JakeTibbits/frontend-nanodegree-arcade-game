@@ -14,6 +14,7 @@ body
   background-image: url(../images/bg.jpg)
   background-size: contain
   background-position: center
+  position: relative
 
 
 .game-header
@@ -23,3 +24,77 @@ body
     letter-spacing: 0.1em
     margin-bottom: 0
     font-size: 36px
+    text-align: center
+
+.hud-top
+  width: 505px
+  display: flex
+  align-items: center
+  justify-content: space-between
+  margin: 15px auto -30px auto
+
+#livesList
+  display: flex
+  list-style-type: none
+  padding: 0
+  margin: 0
+  margin-left: 10px
+  .life
+    width: 60px
+    height: 60px
+    background:
+      image: url(../images/heart.png)
+      size: 60px
+      position: center center
+      repeat: no-repeat
+
+.level
+  margin-right: 10px
+  font-size: 28px
+
+@keyframes fadeIn
+  0%
+    opacity: 0
+  100%
+    opacity: 1
+
+@keyframes textIn
+  0%
+    transform: scale(0.5)
+  100%
+    transform: scale(1)
+
+
+.modal
+  width: 100vw
+  height: 100vh
+  opacity: 0
+  top: -25px
+  left: 0
+  position: absolute
+  background-color: rgba(0, 0, 0, 0.5)
+
+  &.visible
+    opacity: 1
+    animation: fadeIn 300ms ease-in-out
+    .modal-content
+      animation: textIn 400ms ease-in-out
+
+  &.hidden
+    opacity: 0
+    animation: fadeIn 300ms ease-in-out
+    animation-direction: reverse
+    .modal-content
+      animation: textIn 400ms ease-in-out
+      animation-direction: reverse
+
+  .modal-content
+    display: block
+    width: 100%
+    text-align: center
+    position: absolute
+    top: 45%
+    span
+      font-size: 48px
+    p
+      font-size: 28px
