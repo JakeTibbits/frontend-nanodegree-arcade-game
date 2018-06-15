@@ -1,6 +1,19 @@
-frontend-nanodegree-arcade-game
-===============================
+# Bug Run Funtime Crossy Game
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+Welcome to Bug Run Funtime Crossy Game!
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+## How to play
+
+Use the arrow keys or the 'w', 'a', 's' and 'd' keys on your keyboard to move your LittleGuy around the game board.
+
+The aim of the game is to reach the water. If you bump into any bugs, you'll lose a life and be sent back to the start!
+
+You have three lives in all and once they're gone you lose the game.
+
+There are five leves with increasing difficulty. Complete all five levels to win the game.
+
+## Credits
+
+The game engine and graphics for this game was created by Udacity Frontend NanoDegree course leaders.
+
+Further code for game mechanics created by Jake Tibbits.
