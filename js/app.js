@@ -19,7 +19,9 @@ class Entity {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   };
 
+  //check whether the entity collides with the Player character and return a boolean value
   checkCollision(){
+
     let collision = false;
 
     if ( ((this.x + this.width) > player.x)
@@ -31,12 +33,18 @@ class Entity {
     return collision;
   };
 
+
   holdIt(){
+    //store the entity's current speed in a variable
     let keepSpeed = this.speed;
+    //set speed to 0 to pause game progress
     this.speed = 0;
+    //return the current speed for use on game resume
     return keepSpeed;
   }
+
   restart(oldSpeed){
+    //reset the entity's speed to its previous value to unpause the game
     this.speed = oldSpeed;
   }
 }
@@ -62,12 +70,14 @@ class Enemy extends Entity {
       //console.log("Enemy Position: X"+this.x+" Y"+this.y);
   };
 
+  //if entity has collided with the player
   doCollision(collide){
     if(collide === true){
       player.loseLife();
     }
   }
 
+  //randomize which type of enemy will be spawned
   setSize(probability){
     const enemySizes = {
       'regular' : {
@@ -94,30 +104,33 @@ class Enemy extends Entity {
     //console.log('setSize: sprite: '+ this.sprite+ ' width: '+this.width+' height: '+this.height);
   }
 
+  //randomize how far from the start line the enemy will respawn
   setX(){
     const xPositions = {
       a: -100,
-      b: -200,
-      c: -300
+      b: -225,
+      c: -350
     }
     const random = Math.floor(Math.random() * 100) + 1;
     //console.log('setX: '+random);
-    if(random >= 1 && random <50){
+    if(random >= 1 && random <40){
       this.x = xPositions['a'];
     }
-    if(random >= 50 && random<90){
+    if(random >= 40 && random<75){
       this.x = xPositions['b'];
     }
-    if(random >=85 && random<101){
+    if(random >=75 && random<101){
       this.x = xPositions['c'];
     }
   }
 
+  //randomize speed within a given range
   setSpeed(high, low){
     this.speed = Math.floor(Math.random() * high) + low;
     //console.log('setSpeed: '+this.speed);
   }
 
+  //respawn the enemy with new variables
   setStats(){
     this.setSize(this.rules['toxicChance'] * 10);
     this.setX();
@@ -168,6 +181,7 @@ class Player extends Entity {
 
   };
 
+  //if player has reached water, win the level
   update(){
     if(this.y == -10){
       this.winLevel();
@@ -179,7 +193,6 @@ class Player extends Entity {
   loseLife(){
     this.resetPlayer();
     if(this.lives>1){ this.lives--; setLives(); } else {   this.y = -10.1; pauseGame('loseGame'); }
-
   };
 
   //win level
@@ -192,10 +205,14 @@ class Player extends Entity {
     }
   };
 
+
+  //reset player to starting position
   resetPlayer(newGame = null){
     this.x = playerStart['x'];
     this.y = playerStart['y'];
     this.speed = playerStart['speed'];
+
+    //resey player to starting level and refill lives
     if(newGame){
       this.level = 1;
       this.lives = 3;
@@ -207,6 +224,7 @@ class Player extends Entity {
 
 }
 
+//set the player starting position and speed
 const playerStart = { x: 200, y: 400, speed:82 };
 
 // Now instantiate your objects.
@@ -216,6 +234,8 @@ const player = newPlayer;
 
 let allEnemies;
 
+
+//function to populate the level with varying dificulties of enemies depending on player level
 function setLevel(){
 
   const level = player.level;
@@ -268,14 +288,11 @@ function setLevel(){
 
   setEnemies(enemyRules);
 
-  /*enemy1 = new Enemy(enemySizes['regular']['sprite'], enemyStartPositions['y']['a'], 80, 60, 170);
-  enemy2 = new Enemy('images/enemy-bug.png', enemyStartPositions['x']['a'], enemyStartPositions['y']['b'], 70, 60, 82);
-  enemy3 = new Enemy('images/enemy-bug.png', enemyStartPositions['x']['a'], enemyStartPositions['y']['c'], 70, 60, 250);*/
-  //allEnemies = [enemy1, enemy3, enemy2]
-
 }
 setLevel();
 
+
+//function to add an enemy to each row of the game canvas
 function setEnemies(rules){
 
   const yPositions = {
@@ -291,17 +308,17 @@ function setEnemies(rules){
 
   allEnemies = [topRow, midRow, btmRow];
 
+  //randomize speed, size and position of enemies
   for(const enemy of allEnemies){
     enemy.setStats();
   };
-
-
 
 };
 
 
 let pauseState = 0;
 
+//function to record the current game state and pause
 function pauseGame(type){
   //console.log('pause');
   enemy1Speed = allEnemies[0].holdIt();
@@ -325,6 +342,8 @@ function pauseGame(type){
 
 }
 
+
+//funtion to resume the game using the recorded game state
 function resumeGame(type){
   //console.log('resume');
   allEnemies[0].speed = pauseState[0];
@@ -358,7 +377,7 @@ function resumeGame(type){
 
 
 
-
+//output heart graphics for number of lives left
 function setLives(){
   const livesList = document.getElementById('livesList');
   const life = '<li class="life"></li>';
@@ -392,6 +411,7 @@ document.addEventListener('keyup', function(e) {
         's': 'down',
     };
 
+    //add listener  for spacebar to pause/resume game
     if(e.key == " " || e.key == 'spacebar'){
 
       if(pauseState === 0){
