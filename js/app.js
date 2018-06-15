@@ -1,3 +1,4 @@
+
 // Enemies and Players share features - let's make a parent Class they can extend from
 class Entity {
   constructor(sprite, x, y, width, height, speed) {
@@ -17,21 +18,18 @@ class Entity {
   //render the character image on the game canvas
   render(){
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-  };
+  }
 
   //check whether the entity collides with the Player character and return a boolean value
   checkCollision(){
 
     let collision = false;
 
-    if ( ((this.x + this.width) > player.x)
-    && ((player.x + player.width) > this.x)
-    && ((player.y + player.height) > this.y)
-    && ((this.y + this.height) > player.y) ) {
+    if ( ((this.x + this.width) > player.x) && ((player.x + player.width) > this.x) && ((player.y + player.height) > this.y) && ((this.y + this.height) > player.y) ) {
       collision = true;
     }
     return collision;
-  };
+  }
 
 
   holdIt(){
@@ -68,7 +66,7 @@ class Enemy extends Entity {
       }
       this.doCollision(this.checkCollision());
       //console.log("Enemy Position: X"+this.x+" Y"+this.y);
-  };
+  }
 
   //if entity has collided with the player
   doCollision(collide){
@@ -90,16 +88,16 @@ class Enemy extends Entity {
         'width' : 80,
         'height' : 75
       }
-    }
+    };
 
     if(Math.floor((Math.random() * 10) + 1) > probability){
-      this.sprite = enemySizes['regular']['sprite'];
-      this.width = enemySizes['regular']['width'];
-      this.height = enemySizes['regular']['height'];
+      this.sprite = enemySizes.regular.sprite;
+      this.width = enemySizes.regular.width;
+      this.height = enemySizes.regular.height;
     } else {
-      this.sprite = enemySizes['toxic']['sprite'];
-      this.width = enemySizes['toxic']['width'];
-      this.height = enemySizes['toxic']['height'];
+      this.sprite = enemySizes.toxic.sprite;
+      this.width = enemySizes.toxic.width;
+      this.height = enemySizes.toxic.height;
     }
     //console.log('setSize: sprite: '+ this.sprite+ ' width: '+this.width+' height: '+this.height);
   }
@@ -110,17 +108,17 @@ class Enemy extends Entity {
       a: -100,
       b: -225,
       c: -350
-    }
+    };
     const random = Math.floor(Math.random() * 100) + 1;
     //console.log('setX: '+random);
     if(random >= 1 && random <40){
-      this.x = xPositions['a'];
+      this.x = xPositions.a;
     }
     if(random >= 40 && random<75){
-      this.x = xPositions['b'];
+      this.x = xPositions.b;
     }
     if(random >=75 && random<101){
-      this.x = xPositions['c'];
+      this.x = xPositions.c;
     }
   }
 
@@ -132,9 +130,9 @@ class Enemy extends Entity {
 
   //respawn the enemy with new variables
   setStats(){
-    this.setSize(this.rules['toxicChance'] * 10);
+    this.setSize(this.rules.toxicChance * 10);
     this.setX();
-    this.setSpeed(this.rules['speed']['high'], this.rules['speed']['low']);
+    this.setSpeed(this.rules.speed.high, this.rules.speed.low);
   }
 
 
@@ -179,21 +177,21 @@ class Player extends Entity {
       } else { this.y = 400;}
     }
 
-  };
+  }
 
   //if player has reached water, win the level
   update(){
     if(this.y == -10){
       this.winLevel();
     }
-  };
+  }
 
 
   //reset progress when collision occurs
   loseLife(){
     this.resetPlayer();
     if(this.lives>1){ this.lives--; setLives(); } else {   this.y = -10.1; pauseGame('loseGame'); }
-  };
+  }
 
   //win level
   winLevel(){
@@ -203,14 +201,14 @@ class Player extends Entity {
     } else {
       pauseGame('winGame');
     }
-  };
+  }
 
 
   //reset player to starting position
   resetPlayer(newGame = null){
-    this.x = playerStart['x'];
-    this.y = playerStart['y'];
-    this.speed = playerStart['speed'];
+    this.x = playerStart.x;
+    this.y = playerStart.y;
+    this.speed = playerStart.speed;
 
     //resey player to starting level and refill lives
     if(newGame){
@@ -229,7 +227,7 @@ const playerStart = { x: 200, y: 400, speed:82 };
 
 // Now instantiate your objects.
 // Place the player object in a variable called player
-const newPlayer = new Player('images/char-boy.png', playerStart['x'], playerStart['y'], 60, 70, playerStart['speed'], 3, 1);
+const newPlayer = new Player('images/char-boy.png', playerStart.x, playerStart.y, 60, 70, playerStart.speed, 3, 1);
 const player = newPlayer;
 
 let allEnemies;
@@ -283,7 +281,7 @@ function setLevel(){
         'low' : 250
       },
       'toxicChance' : 0.4
-    }
+    };
   }
 
   setEnemies(enemyRules);
@@ -302,18 +300,18 @@ function setEnemies(rules){
   };
 
 
-  let topRow = new Enemy(null, null, yPositions['top'], null, null, null, rules);
-  let midRow = new Enemy(null, null, yPositions['middle'], null, null, null, rules);
-  let btmRow = new Enemy(null, null, yPositions['bottom'], null, null, null, rules);
+  let topRow = new Enemy(null, null, yPositions.top, null, null, null, rules);
+  let midRow = new Enemy(null, null, yPositions.middle, null, null, null, rules);
+  let btmRow = new Enemy(null, null, yPositions.bottom, null, null, null, rules);
 
   allEnemies = [topRow, midRow, btmRow];
 
   //randomize speed, size and position of enemies
   for(const enemy of allEnemies){
     enemy.setStats();
-  };
+  }
 
-};
+}
 
 
 let pauseState = 0;
@@ -321,10 +319,10 @@ let pauseState = 0;
 //function to record the current game state and pause
 function pauseGame(type){
   //console.log('pause');
-  enemy1Speed = allEnemies[0].holdIt();
-  enemy2Speed = allEnemies[1].holdIt();
-  enemy3Speed = allEnemies[2].holdIt();
-  playerSpeed = player.holdIt();
+  let enemy1Speed = allEnemies[0].holdIt();
+  let enemy2Speed = allEnemies[1].holdIt();
+  let enemy3Speed = allEnemies[2].holdIt();
+  let playerSpeed = player.holdIt();
 
 
   let pauseOverlay = document.getElementById(type);
@@ -350,6 +348,7 @@ function resumeGame(type){
   allEnemies[1].speed = pauseState[1];
   allEnemies[2].speed = pauseState[2];
   player.speed = pauseState[3];
+  let modalId;
 
 
   if(type == 'userResume'){
